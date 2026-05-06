@@ -8,15 +8,39 @@ extends CharacterBody3D
 @export var speed = 5.0
 @export var acceleration = 4.0
 @export var jump_speed = 8.0
+@export var coyote_time = 0.2
+@export var jump_buffer_time = 0.4
+@export var jump_cut_factor = 0.8
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var coyote_timer = 0.0
+var jump_buffer_timer = 0.0
 
 
 func _physics_process(delta: float):
-	if not is_on_floor():
+	coyote_timer -= delta
+	jump_buffer_timer -= delta
+
+	if is_on_floor():
+		coyote_timer = coyote_time
+    
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = jump_buffer_time
+
+	if not is_on_floor() and coyote_timer <= 0:
 		velocity.y -= gravity * delta
+
 	get_move_input(delta)
 	move_and_slide()
+
+	if not Input.is_action_pressed("jump") and velocity.y > 0:
+		velocity.y *= jump_cut_factor
+
+	var can_jump = is_on_floor() or coyote_timer > 0
+	if jump_buffer_timer > 0 and can_jump:
+		velocity.y = jump_speed
+		coyote_timer = 0.0
+		jump_buffer_timer = 0.0
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -27,13 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func get_move_input(delta: float):
-	var vy = velocity.y
-	velocity.y = 0
-
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var dir = Vector3(input.x, 0, input.y).rotated(Vector3.UP, _camera_pivot.rotation.y)
-	velocity = lerp(velocity, dir * speed, acceleration * delta)
-
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		vy = jump_speed
-	velocity.y = vy
+	var friction = acceleration if dir.length() > 0.1 else 10.0
+	velocity = lerp(velocity, dir * speed, friction * delta)
