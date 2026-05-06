@@ -1,5 +1,6 @@
 extends Node
 
+
 @onready var player = $Player
 
 
@@ -9,9 +10,9 @@ func _ready() -> void:
 	print(player.player_name)
 
 
-func _on_tc_changed(_new_tc):
-	print("My name is %s and my total compensation is %s" % [player.player_name, player.total_compensation])
-	if player.total_compensation <= 400:
+func _on_tc_changed(new_tc):
+	print("My name is %s and my total compensation is %s" % [player.player_name, new_tc])
+	if new_tc <= 400:
 		print("%s is a LOSER" % [player.player_name])
 	else:
 		print("%s works at FAANG" % [player.player_name])
