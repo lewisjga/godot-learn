@@ -30,7 +30,6 @@ func _process(_delta: float) -> void:
 func _physics_process(delta):
 	velocity.y += -gravity * delta
 	get_move_input(delta)
-	
 	move_and_slide()
 
 
@@ -46,7 +45,12 @@ func _unhandled_input(event: InputEvent) -> void:
 func get_move_input(delta):
 	var vy = velocity.y
 	velocity.y = 0
+
 	var input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var dir = Vector3(input.x, 0, input.y).rotated(Vector3.UP, _camera_pivot.rotation.y)
 	velocity = lerp(velocity, dir * speed, acceleration * delta)
+
+	if Input.is_action_just_pressed("ui_accept"):
+		vy = jump_speed
+		jumping = true
 	velocity.y = vy
