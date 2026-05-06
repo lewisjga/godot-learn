@@ -1,11 +1,17 @@
 extends Node
 
+@onready var player = $Player
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
-	print("Hello World!")
+	player.tc_changed.connect(_on_tc_changed)
+	print(player.total_compensation)
+	print(player.player_name)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_tc_changed(_new_tc):
+	print("My name is %s and my total compensation is %s" % [player.player_name, player.total_compensation])
+	if player.total_compensation <= 400:
+		print("%s is a LOSER" % [player.player_name])
+	else:
+		print("%s works at FAANG" % [player.player_name])

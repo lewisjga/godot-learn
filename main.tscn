@@ -1,6 +1,54 @@
 [gd_scene format=3 uid="uid://du1ecea51y6w"]
 
 [ext_resource type="Script" uid="uid://bbmskfijjso6k" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dq6unrm0xldul" path="res://player.gd" id="2_0xm2m"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0xm2m"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h2yge"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1bvp3"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 1
+background_color = Color(0.414148, 0.6441805, 0.8831878, 1)
+ambient_light_color = Color(0.37616017, 0.5687496, 0.99368435, 1)
+ambient_light_energy = 1.21
+reflected_light_source = 1
 
 [node name="Main" type="Node" unique_id=206896082]
 script = ExtResource("1_ig7tw")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=257386215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5352349, 3.8700519)
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1916642939]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1894561, 0)
+script = ExtResource("2_0xm2m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1322513204]
+shape = SubResource("CapsuleShape3D_ig7tw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=1046417738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.18827963)
+mesh = SubResource("CapsuleMesh_0xm2m")
+
+[node name="Plane" type="StaticBody3D" parent="." unique_id=1876300022]
+top_level = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Plane" unique_id=1817208090]
+transform = Transform3D(3.548256, 0, 0, 0, 1, 0, 0, 0, 3.4007096, 0, 0, 0)
+mesh = SubResource("PlaneMesh_h2yge")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plane" unique_id=1843400070]
+transform = Transform3D(3.548256, 0, 0, 0, 1, 0, 0, 0, 3.4007096, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_1bvp3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=696044930]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1520999702]
+transform = Transform3D(1, 0, 0, 0, 0.74651045, 0.6653737, 0, -0.6653737, 0.74651045, 0, 3.4350276, 3.1633167)
