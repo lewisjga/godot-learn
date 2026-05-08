@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://ddf4atp0xbfxq"]
+
+[ext_resource type="Script" uid="uid://dgsv8wcr0km4a" path="res://record.gd" id="1_egwgl"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gderf"]
+height = 0.05
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gderf"]
+albedo_color = Color(0, 0, 0, 1)
+metallic = 0.32
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egwgl"]
+albedo_color = Color(0.85490197, 0.078431375, 0.078431375, 1)
+
+[node name="Record" type="Area3D" unique_id=607051743]
+script = ExtResource("1_egwgl")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1417366799]
+shape = SubResource("CylinderShape3D_gderf")
+
+[node name="Mesh" type="CSGCombiner3D" parent="." unique_id=21054107]
+
+[node name="Vinyl" type="CSGCylinder3D" parent="Mesh" unique_id=1630622805]
+transform = Transform3D(1, 0, 0, 0, 0.013113499, 0, 0, 0, 1, 0, 0, 0)
+radius = 1.0
+sides = 15
+material = SubResource("StandardMaterial3D_gderf")
+
+[node name="Label" type="CSGCylinder3D" parent="Mesh" unique_id=1135027057]
+transform = Transform3D(1, 0, 0, 0, 0.013113499, 0, 0, 0, 1, 0, 0, 0)
+radius = 0.35
+height = 3.0
+sides = 15
+material = SubResource("StandardMaterial3D_egwgl")
+
+[node name="Hole" type="CSGCylinder3D" parent="Mesh" unique_id=928960427]
+transform = Transform3D(1, 0, 0, 0, 0.013113499, 0, 0, 0, 1, 0, 0, 0)
+operation = 2
+radius = 0.05
+height = 4.0
+sides = 15

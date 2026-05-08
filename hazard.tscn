@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b2gjltmuy3fqa"]
+
+[ext_resource type="Script" uid="uid://cscwryiooty2f" path="res://hazard.gd" id="1_2d52u"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1vjne"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2d52u"]
+transparency = 1
+albedo_color = Color(0.14901961, 0.45490196, 0.14117648, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5jc4t"]
+
+[node name="GenericSlime" type="Area3D" unique_id=542823061]
+script = ExtResource("1_2d52u")
+
+[node name="Slime" type="MeshInstance3D" parent="." unique_id=952563983]
+mesh = SubResource("BoxMesh_1vjne")
+surface_material_override/0 = SubResource("StandardMaterial3D_2d52u")
+
+[node name="TouchMeToDie" type="CollisionShape3D" parent="." unique_id=2123183197]
+shape = SubResource("BoxShape3D_5jc4t")

@@ -5,12 +5,15 @@ extends CharacterBody3D
 
 @export_range(0.0, 1.0) var mouse_sensitivity = 0.01
 @export var tilt_limit = deg_to_rad(75)
+@export var health = 100
 @export var speed = 5.0
 @export var acceleration = 4.0
 @export var jump_speed = 8.0
 @export var coyote_time = 0.2
 @export var jump_buffer_time = 0.4
 @export var jump_cut_factor = 0.8
+@export var invuln_timer = 0.0
+@export var rep = 0
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var coyote_timer = 0.0
@@ -20,6 +23,7 @@ var jump_buffer_timer = 0.0
 func _physics_process(delta: float):
 	coyote_timer -= delta
 	jump_buffer_timer -= delta
+	invuln_timer -= delta
 
 	if is_on_floor():
 		coyote_timer = coyote_time
