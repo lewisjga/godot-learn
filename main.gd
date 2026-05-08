@@ -6,8 +6,12 @@ const HAZARD_SCENE = preload("res://hazard.tscn")
 func _spawn_records(coords: Vector3):
 	var record = RECORD_SCENE.instantiate()
 	record.position = coords
+	record.picked_up.connect(_on_pickedup)
 	add_child(record)
 
 func _ready() -> void:
-	_spawn_records(Vector3(15, 0, 20))
-	_spawn_records(Vector3(1, 5, 12))
+	_spawn_records(Vector3(15, 1, 20))
+	_spawn_records(Vector3(1, 1, 12))
+
+func _on_pickedup():
+	print("Mad respect, yo")

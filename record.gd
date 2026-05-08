@@ -2,6 +2,9 @@ extends Area3D
 
 @export var value = 25
 
+signal picked_up
+
+
 func _ready():
 	body_entered.connect(_on_pickup)
 
@@ -10,5 +13,5 @@ func _on_pickup(body) -> void:
 		return
 	else:
 		body.rep += value
-		print("Mad respect, yo")
+		picked_up.emit()
 		queue_free()
